@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduard Korolov - Profesní Profil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a3a5f;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #7f8c8d;
+            --success: #2ecc71;
+            --bg-light: #ffffff;
+            --bg-dark: #1e1e1e;
+            --text-light: #333333;
+            --text-dark: #f0f0f0;
+            --card-light: #ffffff;
+            --card-dark: #2d2d2d;
+            --border-light: #e0e0e0;
+            --border-dark: #404040;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: var(--bg-dark);
+            --text-color: var(--text-dark);
+            --card-bg: var(--card-dark);
+            --border-color: var(--border-dark);
+            --shadow: var(--shadow-dark);
+        }
+
+        [data-theme="light"] {
+            --bg-color: var(--bg-light);
+            --text-color: var(--text-light);
+            --card-bg: var(--card-light);
+            --border-color: var(--border-light);
+            --shadow: var(--shadow-light);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            transition: var(--transition);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--primary);
+        }
+
+        .sidebar {
+            background: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            transition: var(--transition);
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .profile .title {
+            color: var(--secondary);
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+        }
+
+        .contact-info h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info h2 i {
+            margin-right: 10px;
+        }
+
+        .contact-info ul {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info li i {
+            width: 20px;
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .skills {
+            margin-bottom: 30px;
+        }
+
+        .skills h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .skills h2 i {
+            margin-right: 10px;
+        }
+
+        .skill-item {
+            margin-bottom: 15px;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 4px;
+            transition: width 1.5s ease;
+        }
+
+        .languages {
+            margin-bottom: 30px;
+        }
+
+        .languages h2 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .languages h2 i {
+            margin-right: 10px;
+        }
+
+        .lang-item {
+            margin-bottom: 12px;
+        }
+
+        .lang-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .lang-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .lang-level {
+            height: 100%;
+            background: var(--success);
+            border-radius: 4px;
+            transition: width 1.5s ease;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: var(--transition);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 15px;
+            color: var(--secondary);
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .experience-item:last-child, .education-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .exp-header, .edu-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .exp-position, .edu-degree {
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .exp-company, .edu-school {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .exp-date, .edu-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .exp-details, .edu-details {
+            margin-top: 10px;
+        }
+
+        .exp-details ul, .edu-details ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .exp-details li, .edu-details li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .exp-details li:before, .edu-details li:before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-size: 0.7rem;
+        }
+
+        .certificates {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .certificate {
+            background: var(--bg-color);
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .certificate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .certificate-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .certificate-issuer {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .tech-equipment {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .tech-item {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .tech-item i {
+            margin-right: 8px;
+            color: var(--secondary);
+        }
+
+        .tech-item:hover {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .goal-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .goal-section h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .goal-section h2 i {
+            margin-right: 10px;
+        }
+
+        .goal-section p {
+            line-height: 1.8;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .exp-header, .edu-header {
+                flex-direction: column;
+            }
+            
+            .exp-date, .edu-date {
+                margin-top: 5px;
+            }
+            
+            .certificates {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            .theme-toggle {
+                display: none;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            
+            .btn-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <button class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="container">
+        <div class="sidebar">
+            <div class="profile">
+                <h1>Eduard Korolov</h1>
+                <div class="title">Řidič dodávky po EU</div>
+            </div>
+            
+            <div class="contact-info">
+                <h2><i class="fas fa-address-card"></i> Kontakt</h2>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Brno, ČR</li>
+                    <li><i class="fas fa-phone"></i> +420 732 995 210</li>
+                    <li><i class="fas fa-envelope"></i> eddigood2020@gmail.com</li>
+                    <li><i class="fas fa-birthday-cake"></i> 30. 6. 1968</li>
+                    <li><i class="fas fa-flag"></i> Ukrajinská</li>
+                </ul>
+            </div>
+            
+            <div class="skills">
+                <h2><i class="fas fa-cogs"></i> Dovednosti</h2>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Řízení dodávky</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-width="95%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Technická údržba</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-width="90%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Logistika</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-width="85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">
+                        <span>Práce ve výškách</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-level" data-width="80%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="languages">
+                <h2><i class="fas fa-language"></i> Jazyky</h2>
+                <div class="lang-item">
+                    <div class="lang-name">
+                        <span>Ukrajinština</span>
+                        <span>100%</span>
+                    </div>
+                    <div class="lang-bar">
+                        <div class="lang-level" data-width="100%"></div>
+                    </div>
+                </div>
+                <div class="lang-item">
+                    <div class="lang-name">
+                        <span>Ruština</span>
+                        <span>100%</span>
+                    </div>
+                    <div class="lang-bar">
+                        <div class="lang-level" data-width="100%"></div>
+                    </div>
+                </div>
+                <div class="lang-item">
+                    <div class="lang-name">
+                        <span>Čeština</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="lang-bar">
+                        <div class="lang-level" data-width="70%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <a href="#" class="btn" onclick="window.print()">
+                    <i class="fas fa-download"></i> Stáhnout PDF
+                </a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-user"></i> Profesní profil</h2>
+                <p>Zkušený, zodpovědný a technicky zdatný pracovník s dlouholetou praxí v dopravě, údržbě a stavebnictví. Aktuálně působím jako natěrač a údržbář ve firmě S-Universal s.r.o., Brno. Mým cílem je využít své zkušenosti s řízením, organizací práce a technickou kvalifikací v rámci mezinárodní dopravy po celé EU.</p>
+                
+                <div class="tech-equipment">
+                    <div class="tech-item"><i class="fas fa-truck"></i> Řidičský průkaz B</div>
+                    <div class="tech-item"><i class="fas fa-wrench"></i> Vysokozdvižný vozík</div>
+                    <div class="tech-item"><i class="fas fa-hard-hat"></i> Práce ve výškách</div>
+                    <div class="tech-item"><i class="fas fa-map-marked-alt"></i> GPS navigace</div>
+                    <div class="tech-item"><i class="fas fa-tools"></i> Technická údržba</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-briefcase"></i> Pracovní zkušenosti</h2>
+                
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-position">Natěrač / údržbář / řidič dodávky</div>
+                            <div class="exp-company">S-Universal s.r.o., Brno</div>
+                        </div>
+                        <div class="exp-date">2023 – dosud</div>
+                    </div>
+                    <div class="exp-details">
+                        <ul>
+                            <li>Povrchové úpravy ocelových a průmyslových konstrukcí, nátěry, opravy</li>
+                            <li>Práce ve výškách, obsluha pracovních plošin, dodržování BOZP</li>
+                            <li>Řízení dodávky po celé ČR a EU, přeprava materiálu a pracovníků</li>
+                            <li>Odpovědnost za technický stav vozidla a evidenci jízd</li>
+                            <li>Výsledky: bezúrazový provoz, včasné dokončení zakázek, nulové reklamace</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-position">Řidič – mechanik / automechanik / technik</div>
+                            <div class="exp-company">Národní muzeum lidové architektury a života Ukrajiny</div>
+                        </div>
+                        <div class="exp-date">2011 – 2019</div>
+                    </div>
+                    <div class="exp-details">
+                        <ul>
+                            <li>Služební řidič, mechanik</li>
+                            <li>Opravy, údržba vozidel a zařízení, servisní činnost</li>
+                            <li>Spolupráce na stavebních a údržbářských projektech v terénu</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-position">Řidič – operátor</div>
+                            <div class="exp-company">TOV „Metal“, Kyjev</div>
+                        </div>
+                        <div class="exp-date">2001 – 2006</div>
+                    </div>
+                    <div class="exp-details">
+                        <ul>
+                            <li>Obsluha výrobních zařízení a dopravní techniky (konvejery)</li>
+                            <li>Základní mechanická údržba, evidence provozu, přeprava zboží</li>
+                            <li>Důvod ukončení: vlastní žádost (zápis v pracovní knížce)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-position">Řidič-dispečer / expedient</div>
+                            <div class="exp-company">Soukromá logistická firma, Kyjev</div>
+                        </div>
+                        <div class="exp-date">2006 – 2007</div>
+                    </div>
+                    <div class="exp-details">
+                        <ul>
+                            <li>Rozvoz zásilek po městě a regionu, práce s doklady a fakturací</li>
+                            <li>Přesnost, dochvilnost, komunikace se zákazníky</li>
+                            <li>Důvod ukončení: organizační změna, přechod na jinou pozici</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Vzdělání a kvalifikace</h2>
+                
+                <div class="education-item">
+                    <div class="edu-header">
+                        <div>
+                            <div class="edu-degree">České vysoké učení technické v Praze (ČVUT)</div>
+                            <div class="edu-school">Osvědčení o uznání zahraničního vysokoškolského diplomu</div>
+                        </div>
+                        <div class="edu-date">2021</div>
+                    </div>
+                    <div class="edu-details">
+                        <ul>
+                            <li>Obor: Konstrukce pozemních staveb</li>
+                            <li>Uznáno jako rovnocenné českému vysokoškolskému vzdělání</li>
+                            <li>Vydáno: Praha, 2021</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="education-item">
+                    <div class="edu-header">
+                        <div>
+                            <div class="edu-degree">Kyjevská státní technická univerzita stavebnictví a architektury</div>
+                            <div class="edu-school">Diplom specialisty / inženýr</div>
+                        </div>
+                        <div class="edu-date">1995</div>
+                    </div>
+                    <div class="edu-details">
+                        <ul>
+                            <li>Obor: Konstrukce pozemních staveb</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="certificates">
+                    <div class="certificate">
+                        <div class="certificate-name">Řidič elektrického vysokozdvižného vozíku</div>
+                        <div class="certificate-issuer">ATVT „Trest Kyjivelektromontážbud“, 2019</div>
+                    </div>
+                    
+                    <div class="certificate">
+                        <div class="certificate-name">Práce ve výškách</div>
+                        <div class="certificate-issuer">BOZPO servis, 2025</div>
+                    </div>
+                    
+                    <div class="certificate">
+                        <div class="certificate-name">Obsluha pracovních plošin</div>
+                        <div class="certificate-issuer">BOZPO servis, 2025</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="goal-section">
+                <h2><i class="fas fa-bullseye"></i> Profesní cíl</h2>
+                <p>Hledám stabilní zaměstnání na pozici řidiče dodávky po celé EU, kde mohu uplatnit své dlouholeté zkušenosti v oblasti řízení, technické údržby a organizace práce. Nabízím spolehlivost, disciplínu a pečlivý přístup k plnění pracovních úkolů.</p>
+                
+                <div class="tech-equipment">
+                    <div class="tech-item"><i class="fas fa-check-circle"></i> Ochota cestovat po EU</div>
+                    <div class="tech-item"><i class="fas fa-moon"></i> Noční směny</div>
+                    <div class="tech-item"><i class="fas fa-calendar-week"></i> Víkendové směny</div>
+                    <div class="tech-item"><i class="fas fa-user-shield"></i> Čistý trestní rejstřík</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or default to light
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            body.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+            
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+            
+            function updateThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            }
+            
+            // Animate skill bars
+            const skillBars = document.querySelectorAll('.skill-level, .lang-level');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.getAttribute('data-width');
+                        entry.target.style.width = width;
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            skillBars.forEach(bar => {
+                observer.observe(bar);
+            });
+            
+            // Add print functionality
+            document.querySelector('.btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.print();
+            });
+        });
+    </script>
+</body>
+</html>
